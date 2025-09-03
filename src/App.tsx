@@ -1,36 +1,28 @@
-import { Button, Select } from "antd";
+import { Button, Calendar, Rate } from "antd";
 import DefaultLayout from "./layouts/DefaultLayout";
 
-function App() {
+export default function App() {
   return (
-    <>
-      {/* <h1 className="text-red-600 text-4xl bg-gray-300 font-semibold">
+    <div>
+      {/* <h1 className="text-3xl text-blue-600 font-semibold text-center bg-red-300 p-9 m-9">
         Welcome to Rikkei Education
       </h1>
-
-      <div className="size-[50px] bg-blue-600 rounded-full"></div>
+      <h1 className="text-3xl text-blue-600 font-semibold text-center bg-red-300 p-9 m-9">
+        Welcome to Rikkei Education
+      </h1>
 
       <Button type="primary" danger>
         Button Primary
       </Button>
 
-      <Select
-        mode="multiple"
-        showSearch
-        allowClear
-        defaultValue="lucy"
-        style={{ width: 300 }}
-        options={[
-          { value: "jack", label: "Jack" },
-          { value: "lucy", label: "Lucy" },
-          { value: "Yiminghe", label: "yiminghe" },
-          { value: "disabled", label: "Disabled", disabled: true },
-        ]}
-      /> */}
+      <Button type="primary" shape="circle">
+        A
+      </Button>
 
+      <Rate onChange={(value) => console.log("Value: ", value)} />
+
+      <Calendar /> */}
       <DefaultLayout />
-    </>
+    </div>
   );
 }
-
-export default App;

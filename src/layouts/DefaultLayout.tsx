@@ -3,8 +3,8 @@ import {
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
+  ReloadOutlined,
   TeamOutlined,
-  BellOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps, TableColumnsType, TableProps } from "antd";
@@ -39,18 +39,18 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
+  getItem("Tổng quan", "1", <PieChartOutlined />),
+  getItem("Quản lý tiền lương", "2", <DesktopOutlined />),
+  getItem("Quản lý nhân sự", "sub1", <UserOutlined />, [
     getItem("Tom", "3"),
     getItem("Bill", "4"),
     getItem("Alex", "5"),
   ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
+  getItem("Quản lý đào tạo", "sub2", <TeamOutlined />, [
     getItem("Team 1", "6"),
     getItem("Team 2", "8"),
   ]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem("Quản lý tài liệu", "9", <FileOutlined />),
 ];
 
 interface DataType {
@@ -60,69 +60,80 @@ interface DataType {
   address: string;
 }
 
-const columns: TableColumnsType<DataType> = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    render: (text: string) => <a>{text}</a>,
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-  },
-];
-
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "Disabled User",
-    age: 99,
-    address: "Sydney No. 1 Lake Park",
-  },
-];
-
-// rowSelection object indicates the need for row selection
-const rowSelection: TableProps<DataType>["rowSelection"] = {
-  onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      "selectedRows: ",
-      selectedRows
-    );
-  },
-  getCheckboxProps: (record: DataType) => ({
-    disabled: record.name === "Disabled User", // Column configuration not to be checked
-    name: record.name,
-  }),
-};
-
 const DefaultLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const columns: TableColumnsType<DataType> = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      render: (text: string) => <a>{text}</a>,
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+    },
+    {
+      width: 200,
+      title: "Function",
+      dataIndex: "address",
+      render: () => (
+        <div className="flex gap-2">
+          <Button>Edit</Button>
+          <Button>Delete</Button>
+        </div>
+      ),
+    },
+  ];
+
+  const data: DataType[] = [
+    {
+      key: "1",
+      name: "John Brown",
+      age: 32,
+      address: "New York No. 1 Lake Park",
+    },
+    {
+      key: "2",
+      name: "Jim Green",
+      age: 42,
+      address: "London No. 1 Lake Park",
+    },
+    {
+      key: "3",
+      name: "Joe Black",
+      age: 32,
+      address: "Sydney No. 1 Lake Park",
+    },
+    {
+      key: "4",
+      name: "Disabled User",
+      age: 99,
+      address: "Sydney No. 1 Lake Park",
+    },
+  ];
+
+  // rowSelection object indicates the need for row selection
+  const rowSelection: TableProps<DataType>["rowSelection"] = {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+    },
+    getCheckboxProps: (record: DataType) => ({
+      disabled: record.name === "Disabled User", // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -140,17 +151,13 @@ const DefaultLayout: React.FC = () => {
         />
       </Sider>
       <Layout>
-        <Header
-          style={{
-            padding: "0 24px",
-            background: colorBgContainer,
-          }}
-        >
-          <div className="flex items-center justify-between h-[64px]">
-            <Input.Search style={{ width: 300 }} />
-            <div className="flex items-center gap-3">
-              <BellOutlined />
-              <Avatar size="small" icon={<UserOutlined />} />
+        {/* Component Header */}
+        <Header style={{ padding: 0, background: colorBgContainer }}>
+          <div className="flex items-center px-6 justify-between">
+            <Input.Search placeholder="Tìm kiếm..." style={{ width: 300 }} />
+
+            <div>
+              <Avatar shape="circle" size="large" icon={<UserOutlined />} />
             </div>
           </div>
         </Header>
@@ -176,8 +183,12 @@ const DefaultLayout: React.FC = () => {
               <Button type="primary">Thêm mới nhân viên</Button>
             </div>
 
-            <div className="my-5">
-              <Input.Search placeholder="Tìm kiếm nhân viên" />
+            <div className="flex items-center justify-end gap-5 my-5">
+              <Input.Search
+                style={{ width: 300 }}
+                placeholder="Tìm kiếm nhân viên theo tên..."
+              />
+              <ReloadOutlined className="text-[24px]" />
             </div>
 
             <div>
@@ -189,7 +200,7 @@ const DefaultLayout: React.FC = () => {
               />
             </div>
 
-            <div className="mt-5 flex justify-end">
+            <div className="flex justify-end mt-5">
               <Pagination showQuickJumper defaultCurrent={2} total={500} />
             </div>
           </div>
