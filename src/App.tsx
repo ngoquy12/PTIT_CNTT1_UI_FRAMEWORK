@@ -26,3 +26,45 @@ export default function App() {
     </div>
   );
 }
+
+// import { Button, Modal } from "antd";
+// import { SearchOutlined } from "@ant-design/icons";
+// import { useState } from "react";
+
+// export default function App() {
+//   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+
+//   const handleShowModal = () => {
+//     setIsShowModal(true);
+//   };
+
+//   const handleHiddenModal = () => {
+//     setIsShowModal(false);
+//   };
+
+//   return (
+//     <div>
+//       <Button type="primary" danger>
+//         Button
+//       </Button>
+//       <Button type="primary" shape="circle" icon={<SearchOutlined />} />
+
+//       <Button onClick={handleShowModal}>Mở modal</Button>
+
+//       {/* Component modal */}
+//       <Modal
+//         centered={false}
+//         width={500}
+//         closeIcon={false}
+//         // footer={null}
+//         onOk={() => console.log("Nút ok được nhấn")}
+//         onCancel={handleHiddenModal}
+//         open={isShowModal}
+//         title="Tiêu đề modal"
+//         okText="Xác nhận"
+//         cancelText="Hủy"
+//         maskClosable={false}
+//       ></Modal>
+//     </div>
+//   );
+// }
