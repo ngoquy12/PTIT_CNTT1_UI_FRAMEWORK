@@ -39,6 +39,8 @@ export default function ListEmployee() {
   const [employeInfo, setEmployeeInfo] = useState<Employee | null>(null);
   const [idDelete, setIdDelete] = useState<number | null>(null);
   const [form] = Form.useForm(); // Tham chiếu đến form cần thao tác
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   // Cập nhật giá trị vào trong form (Lưu ý: Form được update khi có sự thay đổi trong employeInfo)
   useEffect(() => {
@@ -145,9 +147,14 @@ export default function ListEmployee() {
     console.log("Failed:", errorInfo);
   };
 
+  const handleChangePage = (currentPage: number, pageSize: number) => {
+    setCurrentPage(currentPage);
+    setPageSize(pageSize);
+  };
+
   return (
     <>
-      <Modal
+      {/* <Modal
         title="Xác nhận"
         open={true}
         footer={
@@ -160,7 +167,7 @@ export default function ListEmployee() {
         }
       >
         <p>Bạn có chắc chắn muốn xóa nhân viên này không?</p>
-      </Modal>
+      </Modal> */}
 
       {/* Modal thêm mới / Cập nhật nhân viên */}
       <Modal
@@ -250,7 +257,13 @@ export default function ListEmployee() {
       </div>
 
       <div className="flex justify-end mt-5">
-        <Pagination showQuickJumper defaultCurrent={2} total={500} />
+        <Pagination
+          onChange={handleChangePage}
+          defaultPageSize={1}
+          defaultCurrent={2}
+          total={employees.length}
+          showTotal={(total) => <div>Tổng số bản ghi: {total}</div>}
+        />
       </div>
     </>
   );
